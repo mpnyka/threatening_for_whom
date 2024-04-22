@@ -227,9 +227,6 @@ region_country_data08 <- gdp %>%
 
 #### Scripts for cleaning the EVS data and merging it with the Eurostat data ### -------------------------------------------------------
 
-
-## country/regional level variables can be found on the country_regional_data_Cleaning.R file
-
 region_country_data08 <- read_csv("data/region_country_data08.csv")
 ## CSV containing the welfare type by country (from Esping Andersen, adapted by Mau and Burkhardt 2009 + former soviet country category)
 welfare_type <- read_csv("welfare_types_country.csv") %>% select(-country_name)
@@ -244,7 +241,7 @@ cntry08 <- EVS2008 %>% extract_vallab("country") %>%
          country_id = id)
 
 ## correspondence table between the EVS nuts2 random coding system and actual nuts2 names/codes. 
-## Script to create it can be found in nuts_cleaning.R
+## Script to create it can be found in evs_nuts_convergence.R
 nuts_evs_correspondence <- read_csv("~/Desktop/Sociology/Dissertation/Analysis/EVS/nuts_evs_correspondence.csv")
 
 
@@ -298,7 +295,7 @@ EVS_2008 <- EVS2008 %>%
                             country_code == "LT" ~ "LT0",
                             TRUE ~ nuts2))
 
-## create dfemeanign function:
+## create demeaning function:
 demean <- function(x) x - mean(x, na.rm = T)
 
 full_dataset08 <- region_country_data08 %>% 
