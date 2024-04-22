@@ -10,7 +10,7 @@ It contains the scripts necessary to collect all the Eurostat variables as well 
 
 TFW_ESR_figures_tables.R
 
-It uses the data file created in TFW_ESR_cleaningfile.R and contains the scripts necessary to run the analyses presented in the figures and tables in paper, as well as the code to create such figures and tables.
+It uses the data file created in TFW_ESR_cleaningfile.R and contains the scripts necessary to run the analyses presented in the figures and tables in paper, as well as the code to create such figures and tables. The resulting plots can be seen in the plots/ directory
 
 EVS_nuts_convergence.R
 
