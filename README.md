@@ -1,8 +1,5 @@
 # threatening_for_whom
-Replication package for “Threatening for Whom?  National boundary-making, immigration, and support for the welfare state”
-
-Mireia Triguero Roura
-Paper forthcoming at the European Sociological Review (2025)
+Replication package for “Threatening for Whom?  National boundary-making, immigration, and support for the welfare state”, Mireia Triguero Roura. Paper forthcoming at the European Sociological Review (2025)
 
 TFW_ESR_cleaningfile.R
 
