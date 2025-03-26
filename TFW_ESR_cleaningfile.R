@@ -8,22 +8,21 @@ library(wesanderson)
 library(surveytoolbox)
 library(lubridate)
 library(countrycode)
-
-
-setwd("~/Desktop/Sociology/Dissertation/Analysis/paper_3")
+library(here)
 
 
 #### Scripts for gathering the country- and regional- level data from the Eurostat ### -------------------------------------------------------
 
 ## UK data for older NUTS2 divisions come from the UK statistics website (locally downloaded)
-uk_gdp <- read_csv("data_immigrants/gdp_uk.csv") %>%
+
+uk_gdp <- read_csv("data/gdp_uk.csv") %>%
   clean_names() %>%
   filter(nuts_level == "NUTS2" | nuts_level == "UK") %>%
   dplyr::select(-nuts_level, -region_name) %>%
   pivot_longer(-nuts_code, names_to = "year_gdp", values_to = "gdp") %>%
   mutate(year_gdp = as.numeric(str_remove(year_gdp, "x")),
          log_gdp = log(gdp),
-         year_gdp = ifelse(year_gdp == 20183, 2018, year_gdp)) %>%
+         year_gdp = ifelse(year_gdp == 20183, 2018, year_gdp)) %>% ## typo in the 2018 year in original data
   rename(region = nuts_code) %>%
   dplyr::select(-gdp) 
 
@@ -94,8 +93,8 @@ exp <- get_eurostat(id = "spr_exp_fto") %>%
 
 ## nuts correspondence tables for older NUTS codes to match with the Census 2011 data
 
-uk_recodes <- read_csv("~/Desktop/Sociology/Dissertation/Analysis/paper_3/evs2017nutsrecodes.csv") ## data extracted from Eurostat where the UK is listed with the new region boundaries
-el_recodes <- read_csv("~/Desktop/Sociology/Dissertation/Analysis/paper_3/greece_correspondence.csv") ## From Eurostat pdf sheets about how to proceed about recodings
+uk_recodes <- read_csv("evs2017nutsrecodes.csv") ## data extracted from Eurostat where the UK is listed with the new region boundaries
+el_recodes <- read_csv("greece_correspondence.csv") ## From Eurostat pdf sheets about how to proceed about recodings
 
 ## Census data (last accessed Jan. 24th, 2023)
 census <- get_eurostat("cens_11cobe_r2") %>% ## download census data
@@ -227,6 +226,9 @@ region_country_data08 <- gdp %>%
 
 #### Scripts for cleaning the EVS data and merging it with the Eurostat data ### -------------------------------------------------------
 
+
+## country/regional level variables can be found on the country_regional_data_Cleaning.R file
+
 region_country_data08 <- read_csv("data/region_country_data08.csv")
 ## CSV containing the welfare type by country (from Esping Andersen, adapted by Mau and Burkhardt 2009 + former soviet country category)
 welfare_type <- read_csv("welfare_types_country.csv") %>% select(-country_name)
@@ -241,7 +243,7 @@ cntry08 <- EVS2008 %>% extract_vallab("country") %>%
          country_id = id)
 
 ## correspondence table between the EVS nuts2 random coding system and actual nuts2 names/codes. 
-## Script to create it can be found in evs_nuts_convergence.R
+## Script to create it can be found in nuts_cleaning.R
 nuts_evs_correspondence <- read_csv("~/Desktop/Sociology/Dissertation/Analysis/EVS/nuts_evs_correspondence.csv")
 
 
@@ -295,7 +297,7 @@ EVS_2008 <- EVS2008 %>%
                             country_code == "LT" ~ "LT0",
                             TRUE ~ nuts2))
 
-## create demeaning function:
+## create dfemeanign function:
 demean <- function(x) x - mean(x, na.rm = T)
 
 full_dataset08 <- region_country_data08 %>% 
