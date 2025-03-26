@@ -93,8 +93,8 @@ exp <- get_eurostat(id = "spr_exp_fto") %>%
 
 ## nuts correspondence tables for older NUTS codes to match with the Census 2011 data
 
-uk_recodes <- read_csv("evs2017nutsrecodes.csv") ## data extracted from Eurostat where the UK is listed with the new region boundaries
-el_recodes <- read_csv("greece_correspondence.csv") ## From Eurostat pdf sheets about how to proceed about recodings
+uk_recodes <- read_csv("data/evs2017nutsrecodes.csv") ## data extracted from Eurostat where the UK is listed with the new region boundaries
+el_recodes <- read_csv("data/greece_correspondence.csv") ## From Eurostat pdf sheets about how to proceed about recodings
 
 ## Census data (last accessed Jan. 24th, 2023)
 census <- get_eurostat("cens_11cobe_r2") %>% ## download census data
@@ -231,11 +231,11 @@ region_country_data08 <- gdp %>%
 
 region_country_data08 <- read_csv("data/region_country_data08.csv")
 ## CSV containing the welfare type by country (from Esping Andersen, adapted by Mau and Burkhardt 2009 + former soviet country category)
-welfare_type <- read_csv("welfare_types_country.csv") %>% select(-country_name)
+welfare_type <- read_csv("data/welfare_types_country.csv") %>% select(-country_name)
 
 ## Loading and cleaning EVS data
 
-EVS2008 <- read_dta("~/Desktop/Sociology/Dissertation/Analysis/EVS/EVS2008.dta") 
+EVS2008 <- read_dta("data/EVS/EVS2008.dta") 
 
 ## Get country names from the dta file:
 cntry08 <- EVS2008 %>% extract_vallab("country") %>% 
@@ -244,7 +244,7 @@ cntry08 <- EVS2008 %>% extract_vallab("country") %>%
 
 ## correspondence table between the EVS nuts2 random coding system and actual nuts2 names/codes. 
 ## Script to create it can be found in nuts_cleaning.R
-nuts_evs_correspondence <- read_csv("~/Desktop/Sociology/Dissertation/Analysis/EVS/nuts_evs_correspondence.csv")
+nuts_evs_correspondence <- read_csv("data/nuts_evs_correspondence.csv")
 
 
 ## Select relevant variables and do necessary transformations:

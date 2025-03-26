@@ -11,6 +11,12 @@ library(interplot)
 library(gridExtra)
 library(broom.mixed)
 library(texreg)
+library(lavaan)
+library(semPlot)
+library(semTools) 
+
+## Set working directory (assumed project at the root directory):
+
 library(here)
 
 
@@ -475,5 +481,70 @@ texreg(list(h2_simple, h2_full, h2_full_income),
 
 sink()
 
+##### Extra analyses ######
+
+## Check the factor analyses invariances:
+
+model <- '
+ethnic = ~ n_born_country + n_ancestry + n_lived_country 
+civic = ~  n_language + n_respect_laws + n_lived_country '
+
+
+measurementInvariance(model = model,
+                      data=d,
+                      group="country_name") 
+
+ESR_fit <- cfa(model, data = d)
+summary(ESR_fit)
+
+config <- cfa(model,
+              data = d,
+              group = "country_name")
+
+weak <- cfa(model,
+            data=d,
+            group="country_name",
+            group.equal="loadings")
+
+strong <- cfa(model,
+              data=d,
+              group="country_name", group.equal =
+                c("loadings", "intercepts"))
+strict <- cfa(model,
+              data=d,
+              group="country_name", group.equal =
+                c("loadings", "intercepts",
+                  "residuals"))
+
+anova(config, weak, strong, strict) 
+
+syntax.config <- measEq.syntax(configural.model = model,
+                               data = d,
+                               parameterization = "theta",
+                               ID.fac = "std.lv", ID.cat = "Wu.Estabrook.2016",
+                               group = "country_name")
+## print lavaan syntax to the Console
+cat(as.character(syntax.config))
+## print a summary of model features
+summary(syntax.config)
+
+mod.config <- as.character(syntax.config)
+fit.config <- cfa(mod.config, data = d, group = "country_name", parameterization = "theta")
+anova(fit.config)
+
+syntax.metric <- measEq.syntax(configural.model = model, data = d,
+                               parameterization = "theta",
+                               ID.fac = "std.lv", ID.cat = "Wu.Estabrook.2016",
+                               group = "country_name", 
+                               group.equal = c("thresholds","loadings"),
+                               long.equal  = c("thresholds","loadings"))
+summary(syntax.metric)                    # summarize model features
+mod.metric <- as.character(syntax.metric) # save as text
+cat(mod.metric)                           # print/view lavaan syntax
+## fit model to data
+fit.metric <- cfa(mod.metric, data = d, group = "country_name",
+                  parameterization = "theta")
+## test equivalence of loadings, given equivalence of thresholds
+anova(fit.config, fit.metric)
 
 

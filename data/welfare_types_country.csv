@@ -1,0 +1,31 @@
+country_name,welfare_type,country_code
+Austria,continental,AT
+Belgium,continental,BE
+Bulgaria,Eastern,BG
+Croatia,Eastern,HR
+Cyprus,latin_rim,CY
+Czech Republic,Eastern,CZ
+Denmark,social_dem,DK
+Estonia,Eastern,EE
+Finland,social_dem,FI
+Germany,continental,DE
+Greece,latin_rim,EL
+Hungary,Eastern,HU
+Italy,continental,IT
+Latvia,Eastern,LV
+Luxembourg,continental,LU
+Malta,Eastern,MT
+Netherlands,continental,NL
+Poland,Eastern,PL
+Portugal,latin_rim,PT
+Romania,Eastern,RO
+Slovakia,Eastern,SK
+Spain,latin_rim,ES
+Sweden,social_dem,SE
+Switzerland,continental,CH
+France,continental,FR
+Lithuania,Eastern,LT
+Slovenia,Eastern,SI
+Norway,social_dem,NO
+United Kingdom,Liberal,UK
+Ireland,Liberal,IE
